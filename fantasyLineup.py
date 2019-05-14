@@ -9,6 +9,7 @@ import numpy as np
 from team import Team
 from roster import Slot
 from player import Player
+from roster import Roster
 
 
 
@@ -52,17 +53,15 @@ class Account:
 
     def setBasketballLineup(self, index, research=True):
         team = self.teams[index]
+
         if research:
-            team.url = team.url + "&view=research"
+            team.url = team.url + "&view=research&scoringPeriodId=104"
 
-        self.driver.get(team.url )
-
-
-        play = Player(0,self.driver)
-        play2 = Player(2,self.driver)
-        play.printPlayer()
-        play2.printPlayer()
-
+        self.driver.get(team.url)
+        teamRoster = Roster(self.driver)
+        teamRoster.move("Elfrid Payton","UTIL_3")
+        teamRoster.move("Serge Ibaka","F")
+        time.sleep(3)
 myA = Account()
 myA.login()
 myA.getTeams()
